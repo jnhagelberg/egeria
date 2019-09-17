@@ -269,7 +269,7 @@ public class OMRSRepositoryEventManager extends OMRSRepositoryEventBuilder
                     //that the OpenMetadataTopicConnector is monitoring the reflect the state of
                     //any asynchronous event processing that is taking place for this event.
                     
-                    //That future has is recorded in the BufferedInstanceEvent.
+                    //That future is recorded in the BufferedInstanceEvent.
                     
                     //Get OMRSFuture for overall asynchronous processing result for the event
                     OMRSFuture future = InternalOMRSEventProcessingContext.getInstance().getOverallAsyncProcessingResult();

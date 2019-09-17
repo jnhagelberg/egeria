@@ -100,7 +100,6 @@ public class IncomingEvent {
         synchronized(asyncProcessingResults) {
             for(OMRSFuture future: asyncProcessingResults) {
                 if (! future.isDone()) {
-                    logger.debug("Waiting for future " + future.toString());
                     return false;
                 }
             }

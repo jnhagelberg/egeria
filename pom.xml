@@ -432,6 +432,7 @@
                     <phase>process-resources</phase>
                     <configuration>
                         <tasks>
+                            <mkdir dir="${project.build.directory}"/>
                             <touch file="${project.build.directory}/${artifactId}-${version}-sources.jar"/>
                             <touch file="${project.build.directory}/${artifactId}-${version}-javadoc.jar"/>
                         </tasks>

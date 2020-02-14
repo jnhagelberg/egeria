@@ -333,6 +333,11 @@ public enum OMRSAuditCode
                                       "part of its routine to permanently disconnect with the open metadata repository cohort.",
                               "No action is required.  This is part of the normal operation of the server."),
 
+    UNREGISTERING_EVENT_PROCESSOR("OMRS-AUDIT-0064",
+            OMRSAuditLogRecordSeverity.INFO,
+            "Unegistering the {0} event consumer with the {1} event manager",
+            "A consumer of events has been unregistered in the event manager.  This consumer will no longer distribute events to its associated components.",
+            "No action is required.  This is part of the normal operation of the server."),
 
     EVENT_PARSING_ERROR("OMRS-AUDIT-0100",
                       OMRSAuditLogRecordSeverity.EXCEPTION,

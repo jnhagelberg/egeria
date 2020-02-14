@@ -182,23 +182,26 @@ public class OMRSMetadataHighwayManager
                     = new OMRSRepositoryEventExchangeRule(cohortConfig.getEventsToProcessRule(),
                                                           cohortConfig.getSelectedTypesToProcess());
 
-            cohortManager.initialize(cohortConfig.getCohortName(),
-                                     localMetadataCollectionId,
-                                     localMetadataCollectionName,
-                                     localServerName,
-                                     localServerType,
-                                     localOrganizationName,
-                                     localRepository,
-                                     localRepositoryContentManager,
-                                     enterpriseAccessConnectionConsumer,
-                                     enterpriseAccessTopicConnector,
-                                     cohortRegistryStore,
-                                     cohortConfig.getCohortOMRSTopicConnection(),
-                                     cohortTopicConnector,
-                                     inboundEventExchangeRule);
+            OMRSCohortManagerInitializer initializer = new OMRSCohortManagerInitializer(cohortManager, 
+                    cohortConfig.getCohortName(),
+                    localMetadataCollectionId,
+                    localMetadataCollectionName,
+                    localServerName,
+                    localServerType,
+                    localOrganizationName,
+                    localRepository,
+                    localRepositoryContentManager,
+                    enterpriseAccessConnectionConsumer,
+                    enterpriseAccessTopicConnector,
+                    cohortRegistryStore,
+                    cohortConfig.getCohortOMRSTopicConnection(),
+                    cohortTopicConnector,
+                    inboundEventExchangeRule);
+            
+            initializer.start();
 
             /*
-             * The cohort manager is only added to the list if it initializes successfully.
+             * The cohort manager is always added to the list.
              */
             cohortManagers.add(cohortManager);
         }

@@ -2,7 +2,9 @@
 /* Copyright Contributors to the ODPi Egeria project. */
 package org.odpi.openmetadata.repositoryservices.connectors.omrstopic;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.odpi.openmetadata.frameworks.connectors.Connector;
 import org.odpi.openmetadata.frameworks.connectors.ConnectorBase;
 import org.odpi.openmetadata.frameworks.connectors.VirtualConnectorExtension;
@@ -24,8 +26,7 @@ import org.odpi.openmetadata.repositoryservices.ffdc.exception.OMRSLogicErrorExc
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 /**
@@ -119,6 +120,34 @@ public class OMRSTopicConnector extends ConnectorBase implements OMRSTopic,
         }
     }
 
+    /**
+     * Unregister an OMRSTopicListener object.  This object will no longer be supplied with all of the OMRS events
+     * received on the topic.
+     *
+     * @param topicListener the listener to remove
+     */
+    public void unregisterListener(OMRSTopicListener topicListener)
+    {
+        if (topicListener != null)
+        {
+            internalTopicListeners.remove(topicListener);
+        }
+        else
+        {
+            final String            methodName = "unregisterListener";
+
+            OMRSErrorCode errorCode = OMRSErrorCode.NULL_OPEN_METADATA_TOPIC_LISTENER;
+            String        errorMessage = errorCode.getErrorMessageId()
+                                       + errorCode.getFormattedErrorMessage(connectionName);
+
+            throw new OMRSLogicErrorException(errorCode.getHTTPErrorCode(),
+                                              this.getClass().getName(),
+                                              methodName,
+                                              errorMessage,
+                                              errorCode.getSystemAction(),
+                                              errorCode.getUserAction());
+        }
+    }
 
     /**
      * Register an OMRSTopicListener object.  This object will be supplied with all of the OMRS events

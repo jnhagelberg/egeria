@@ -126,7 +126,6 @@ public class OMRSRepositoryEventManager extends OMRSRepositoryEventBuilder
         log.debug("New Event Manager");
     }
 
-
     /**
      * Adds a new consumer to the list of consumers that the OMRSRepositoryEventManager will notify of
      * any TypeDef events it receives.
@@ -151,6 +150,29 @@ public class OMRSRepositoryEventManager extends OMRSRepositoryEventBuilder
         typeDefEventConsumers.add(typeDefEventConsumer);
     }
 
+    /**
+     * Removes a consumer from the list of consumers that the OMRSRepositoryEventManager will notify of
+     * any TypeDef events it receives.
+     *
+     * @param typeDefEventConsumer the consumer to remove
+     */
+    public void unregisterTypeDefProcessor(OMRSTypeDefEventProcessor typeDefEventConsumer)
+    {
+        final String actionDescription = "Unregister TypeDef Event Processor";
+    
+        OMRSAuditCode auditCode = OMRSAuditCode.REGISTERING_EVENT_PROCESSOR;
+    
+        auditLog.logRecord(actionDescription,
+                           auditCode.getLogMessageId(),
+                           auditCode.getSeverity(),
+                           auditCode.getFormattedLogMessage(typeDefEventConsumer.getEventProcessorName(),
+                                                            super.getEventProcessorName()),
+                           null,
+                           auditCode.getSystemAction(),
+                           auditCode.getUserAction());
+    
+        typeDefEventConsumers.remove(typeDefEventConsumer);
+    }
 
     /**
      * Adds a new consumer to the list of consumers that the OMRSRepositoryEventManager will notify of
@@ -176,6 +198,30 @@ public class OMRSRepositoryEventManager extends OMRSRepositoryEventBuilder
         instanceEventConsumers.add(instanceEventConsumer);
     }
 
+    /**
+     * Removes a consumer from the list of consumers that the OMRSRepositoryEventManager will notify of
+     * any instance events it receives.
+     *
+     * @param instanceEventConsumer the consumer to remove
+     */
+    public void unregisterInstanceProcessor(OMRSInstanceEventProcessor instanceEventConsumer) 
+    {
+        final String actionDescription = "Unregister Instance Event Processor";
+    
+        OMRSAuditCode auditCode = OMRSAuditCode.UNREGISTERING_EVENT_PROCESSOR;
+    
+        auditLog.logRecord(actionDescription,
+                           auditCode.getLogMessageId(),
+                           auditCode.getSeverity(),
+                           auditCode.getFormattedLogMessage(instanceEventConsumer.getEventProcessorName(),
+                                                            super.getEventProcessorName()),
+                           null,
+                           auditCode.getSystemAction(),
+                           auditCode.getUserAction());
+    
+        instanceEventConsumers.remove(instanceEventConsumer);
+        
+    }
 
     /**
      * Adds a new consumer to the list of consumers that the OMRSRepositoryEventManager will notify of
@@ -202,7 +248,32 @@ public class OMRSRepositoryEventManager extends OMRSRepositoryEventBuilder
         typeDefEventConsumers.add(repositoryEventProcessor);
     }
 
+    /**
+     * Removes a consumer from the list of consumers that the OMRSRepositoryEventManager will notify of
+     * any instance events it receives.
+     *
+     * @param repositoryEventProcessor consumer to remove
+     */
+    public void unregisterRepositoryEventProcessor(OMRSRepositoryEventProcessor repositoryEventProcessor)
+    {
+        
+        final String actionDescription = "Unregister Instance Event Processor";
 
+        OMRSAuditCode auditCode = OMRSAuditCode.UNREGISTERING_EVENT_PROCESSOR;
+
+        auditLog.logRecord(actionDescription,
+                           auditCode.getLogMessageId(),
+                           auditCode.getSeverity(),
+                           auditCode.getFormattedLogMessage(repositoryEventProcessor.getEventProcessorName(),
+                                                            super.getEventProcessorName()),
+                           null,
+                           auditCode.getSystemAction(),
+                           auditCode.getUserAction());
+        
+        instanceEventConsumers.remove(repositoryEventProcessor);
+        typeDefEventConsumers.remove(repositoryEventProcessor);
+    }
+    
     /**
      * Indicate that all of the event processors are registered and it is ready to
      * process events.

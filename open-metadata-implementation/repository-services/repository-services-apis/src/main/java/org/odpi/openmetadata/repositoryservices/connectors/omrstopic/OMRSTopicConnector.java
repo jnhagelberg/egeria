@@ -121,35 +121,6 @@ public class OMRSTopicConnector extends ConnectorBase implements OMRSTopic,
     }
 
     /**
-     * Unregister an OMRSTopicListener object.  This object will no longer be supplied with all of the OMRS events
-     * received on the topic.
-     *
-     * @param topicListener the listener to remove
-     */
-    public void unregisterListener(OMRSTopicListener topicListener)
-    {
-        if (topicListener != null)
-        {
-            internalTopicListeners.remove(topicListener);
-        }
-        else
-        {
-            final String            methodName = "unregisterListener";
-
-            OMRSErrorCode errorCode = OMRSErrorCode.NULL_OPEN_METADATA_TOPIC_LISTENER;
-            String        errorMessage = errorCode.getErrorMessageId()
-                                       + errorCode.getFormattedErrorMessage(connectionName);
-
-            throw new OMRSLogicErrorException(errorCode.getHTTPErrorCode(),
-                                              this.getClass().getName(),
-                                              methodName,
-                                              errorMessage,
-                                              errorCode.getSystemAction(),
-                                              errorCode.getUserAction());
-        }
-    }
-
-    /**
      * Register an OMRSTopicListener object.  This object will be supplied with all of the OMRS events
      * received on the topic.
      *
@@ -159,7 +130,9 @@ public class OMRSTopicConnector extends ConnectorBase implements OMRSTopic,
     {
         if (topicListener != null)
         {
-            internalTopicListeners.add(topicListener);
+            if (! internalTopicListeners.contains(topicListener)) {
+                internalTopicListeners.add(topicListener);
+            }
         }
         else
         {
